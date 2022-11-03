@@ -36,3 +36,6 @@ jobs:
       - name: Test with pytest
         run: |
           python -m coverage -m unittest
+      - name: Show code coverage
+        run: |
+          python -m coverage report
