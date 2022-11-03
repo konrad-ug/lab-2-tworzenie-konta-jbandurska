@@ -2,6 +2,7 @@ class Konto:
     def __init__(self, imie, nazwisko, pesel, kod=""):
         self.imie = imie
         self.nazwisko = nazwisko
+        self.historia = []
         self.oplata = 1
 
         if len(pesel) != 11:
@@ -14,14 +15,22 @@ class Konto:
         else:
             self.saldo = 0
     
-    def zaksieguj_przelew(self, kwota):
+    def zaksieguj_przelew_przychodzący(self, kwota):
+        self.saldo += kwota
+
+        self.historia.append(kwota)
+
+    def zaksieguj_przelew_wychodzący(self, kwota):
         if self.saldo >= kwota:
             self.saldo = self.saldo - kwota
+            self.historia.append(-kwota)
+
 
     def przelew_ekspresowy(self, kwota):
         saldoPrzed = self.saldo
 
-        self.zaksieguj_przelew(kwota)
+        self.zaksieguj_przelew_wychodzący(kwota)
         
         if self.saldo != saldoPrzed:     # przelew dokonany
             self.saldo -= self.oplata
+            self.historia.append(-self.oplata)
