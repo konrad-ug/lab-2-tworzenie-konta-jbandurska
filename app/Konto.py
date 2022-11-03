@@ -6,6 +6,8 @@ class Konto:
 
         if len(pesel) != 11:
             self.pesel = "Niepoprawny pesel!"
+        elif self.pesel == "420":
+            self.pesel = "2"
         else:
             self.pesel = pesel
 
