@@ -51,7 +51,7 @@ class Konto:
 
             elif length >= 5:      # Pierwszy warunek niespełniony, sprawdzamy drugi
 
-                suma = sum(self.historia[length-3:length])
+                suma = sum(self.historia[length-5:length])
                 if suma > kwota:
                     self.saldo += kwota
                     return True

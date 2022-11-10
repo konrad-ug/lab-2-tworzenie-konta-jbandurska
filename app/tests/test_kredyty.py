@@ -33,7 +33,7 @@ class TestKsiegowanie(unittest.TestCase):
         konto = Konto(self.imie, self.nazwisko, self.pesel)
         kwota = 500
 
-        konto.historia = [-100,100,100,100,200,200]
+        konto.historia = [-100,100,300,-100,200,200]
 
         czyUdzielony = konto.zaciagnij_kredyt(kwota)
 
