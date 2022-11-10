@@ -1,66 +1,54 @@
-import unittest
+import unittest, parameterized
 
 from ..Konto import Konto
 
-class TestKsiegowanie(unittest.TestCase):
-    imie = 'darek'
-    nazwisko = 'kowalski'
-    pesel = '02271901334'
+class TestKredyty(unittest.TestCase):
 
-    def test_udzielony_kredyt_ostatnie_3_transakcje(self):
-        konto = Konto(self.imie, self.nazwisko, self.pesel)
-        kwota = 500
+    def setUp(self):
+        self.konto = Konto('darek', 'kowalski', '02271901334')
+        self.kwota = 500
 
-        konto.historia = [-100,100,100,100]
-
-        czyUdzielony = konto.zaciagnij_kredyt(kwota)
-
-        self.assertTrue(czyUdzielony)
-        self.assertEqual(konto.saldo, kwota)
+    @parameterized.expand([
+        ([-100,100,100,100], 500, True, 500),
+        ([-200,100,200,100,30], 600, True, 600)
+    ])
+    def test_udzielony_kredyt_ostatnie_3_transakcje(self, historia, kwota, oczekiwanyWynik, saldo):
+        self.konto.historia = historia
+        czyUdzielony = self.konto.zaciagnij_kredyt(kwota)
+        self.assertEqual(czyUdzielony, oczekiwanyWynik)
+        self.assertEqual(self.konto.saldo, saldo)
 
     def test_nieudzielony_kredyt_ostatnie_3_transakcje(self):
-        konto = Konto(self.imie, self.nazwisko, self.pesel)
-        kwota = 500
+        self.konto.historia = [-100,100,-100,100]
 
-        konto.historia = [-100,100,-100,100]
-
-        czyUdzielony = konto.zaciagnij_kredyt(kwota)
+        czyUdzielony = self.konto.zaciagnij_kredyt(self.kwota)
 
         self.assertTrue(not(czyUdzielony))
-        self.assertEqual(konto.saldo, 0)
+        self.assertEqual(self.konto.saldo, 0)
 
     def test_udzielony_kredyt_ostatnie_5_transakcji(self):
-        konto = Konto(self.imie, self.nazwisko, self.pesel)
-        kwota = 500
+        self.konto.historia = [-100,100,300,-100,200,200]
 
-        konto.historia = [-100,100,300,-100,200,200]
-
-        czyUdzielony = konto.zaciagnij_kredyt(kwota)
+        czyUdzielony = self.konto.zaciagnij_kredyt(self.kwota)
 
         self.assertTrue(czyUdzielony)
-        self.assertEqual(konto.saldo, kwota)
+        self.assertEqual(self.konto.saldo, self.kwota)
 
     def test_nieudzielony_kredyt_ostatnie_5_transakcji(self):
-        konto = Konto(self.imie, self.nazwisko, self.pesel)
-        kwota = 500
+        self.konto.historia = [-100,100,200,100,-20]
 
-        konto.historia = [-100,100,200,100,-20]
-
-        czyUdzielony = konto.zaciagnij_kredyt(kwota)
+        czyUdzielony = self.konto.zaciagnij_kredyt(self.kwota)
 
         self.assertTrue(not(czyUdzielony))
-        self.assertEqual(konto.saldo, 0)
+        self.assertEqual(self.konto.saldo, 0)
 
     def test_nieudzielony_kredyt_za_malo_transakcji(self):
-        konto = Konto(self.imie, self.nazwisko, self.pesel)
-        kwota = 500
+        self.konto.historia = [-100]
 
-        konto.historia = [-100]
-
-        czyUdzielony = konto.zaciagnij_kredyt(kwota)
+        czyUdzielony = self.konto.zaciagnij_kredyt(self.kwota)
 
         self.assertTrue(not(czyUdzielony))
-        self.assertEqual(konto.saldo, 0)
+        self.assertEqual(self.konto.saldo, 0)
 
 
         

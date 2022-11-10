@@ -38,25 +38,19 @@ class Konto:
     def zaciagnij_kredyt(self, kwota):
         length = len(self.historia)
 
-        if length >= 3:
-            czyDodatnie = True
+        # Czy 3 ostatnie przelewy są wpływami - warunek 1
+        czyDodatnie = True
+        for el in self.historia[-3:]:
+            if el <= 0:
+                czyDodatnie = False
 
-            for el in self.historia[length-3:length]:
-                if el <= 0:
-                    czyDodatnie = False
+        # Czy długość historii przynajmniej 5 i czy suma 5 ostanich większa niż kwota - warunek 2
+        suma = (length >= 5 and sum(self.historia[-5:]) > kwota)
 
-            if czyDodatnie:
-                self.saldo += kwota
-                return True
-
-            elif length >= 5:      # Pierwszy warunek niespełniony, sprawdzamy drugi
-
-                suma = sum(self.historia[length-5:length])
-                if suma > kwota:
-                    self.saldo += kwota
-                    return True
-                else: 
-                    return False
-
+        # Jeśli warunek 1 lub 2 spełniony zwiększ saldo
+        if length >= 3 and (czyDodatnie or suma):
+            self.saldo += kwota
+            return True
         else:
             return False
+        
