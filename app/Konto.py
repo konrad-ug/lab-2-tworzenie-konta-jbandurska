@@ -17,7 +17,6 @@ class Konto:
     
     def zaksieguj_przelew_przychodzący(self, kwota):
         self.saldo += kwota
-
         self.historia.append(kwota)
 
     def zaksieguj_przelew_wychodzący(self, kwota):
