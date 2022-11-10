@@ -1,5 +1,3 @@
-import numpy as np
-
 class Konto:
     def __init__(self, imie, nazwisko, pesel, kod=""):
         self.imie = imie
@@ -50,7 +48,7 @@ class Konto:
             if czyDodatnie:
                 self.saldo += kwota
                 return True
-                
+
             elif length >= 5:      # Pierwszy warunek niespełniony, sprawdzamy drugi
 
                 suma = sum(self.historia[length-3:length])
