@@ -1,3 +1,5 @@
+import numpy as np
+
 class Konto:
     def __init__(self, imie, nazwisko, pesel, kod=""):
         self.imie = imie
@@ -34,3 +36,29 @@ class Konto:
         if self.saldo != saldoPrzed:     # przelew dokonany
             self.saldo -= self.oplata
             self.historia.append(-self.oplata)
+
+    def zaciagnij_kredyt(self, kwota):
+        length = len(self.historia)
+
+        if length >= 3:
+            czyDodatnie = True
+
+            for el in self.historia[length-3:length]:
+                if el <= 0:
+                    czyDodatnie = False
+
+            if czyDodatnie:
+                self.saldo += kwota
+                return True
+                
+            elif length >= 5:      # Pierwszy warunek niespełniony, sprawdzamy drugi
+
+                suma = sum(self.historia[length-3:length])
+                if suma > kwota:
+                    self.saldo += kwota
+                    return True
+                else: 
+                    return False
+
+        else:
+            return False
