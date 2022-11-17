@@ -49,6 +49,6 @@ class Konto:
         if self.czy_ostatnie_3_wplywy() or self.czy_suma_5_ostatnich_wieksza_niz_kwota(kwota):
             self.saldo += kwota
             return True
-        else:
+        else: 
             return False
         
