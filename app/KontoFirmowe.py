@@ -10,3 +10,13 @@ class KontoFirmowe(Konto):
 
         if len(nip) != 10:
             self.nip = "Niepoprawny NIP!"
+
+    def zaciagnij_kredyt(self, kwota):
+        czySaldoDwaRazyWieksze = self.saldo >= kwota*2
+        czyPrzelewDoZUS = -1775 in self.historia
+        
+        if czySaldoDwaRazyWieksze and czyPrzelewDoZUS:
+            self.saldo += kwota
+            return True
+        else:
+            return False
