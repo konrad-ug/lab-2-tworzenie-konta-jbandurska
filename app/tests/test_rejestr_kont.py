@@ -5,14 +5,16 @@ from ..RejestrKont import RejestrKont
 
 class TestRejestrKont(unittest.TestCase):
 
-    def setUp(self):
-        self.konto = Konto('darek', 'kowalski', '02271901334')
-        RejestrKont.dodaj_konto(self.konto)
+    @classmethod
+    def setUpClass(cls):
+        cls.konto = Konto('darek', 'kowalski', '02271901334')
+        RejestrKont.dodaj_konto(cls.konto)
 
-    def tearDown(self):
+    @classmethod
+    def tearDownClass(cls):
         RejestrKont.lista = []
 
-    
+
     def test_dodaj_drugie_konto(self):
         RejestrKont.dodaj_konto(self.konto)
 
@@ -29,7 +31,6 @@ class TestRejestrKont(unittest.TestCase):
         self.assertIsNone(znalezione_konto)
 
     def test_ilosc_kont_w_rejestrze(self):
-        RejestrKont.dodaj_konto(self.konto)
         RejestrKont.dodaj_konto(self.konto)
 
         self.assertEqual(RejestrKont.ile_kont(), 3)
