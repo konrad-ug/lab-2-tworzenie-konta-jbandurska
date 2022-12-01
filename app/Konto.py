@@ -51,4 +51,4 @@ class Konto:
             return True
         else: 
             return False
-        
+    
