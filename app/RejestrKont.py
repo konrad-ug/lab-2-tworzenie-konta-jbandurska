@@ -26,8 +26,6 @@ class RejestrKont:
                     konto.imie = dane["imie"]
                 elif key == "nazwisko":
                     konto.nazwisko = dane["nazwisko"]
-                elif key == "pesel":
-                    konto.pesel = dane["pesel"]
 
 
     @classmethod
