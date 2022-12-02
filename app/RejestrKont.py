@@ -19,9 +19,16 @@ class RejestrKont:
     @classmethod
     def zaktualizuj_konto(cls, pesel, dane):
         konto = cls.wyszukaj_konto_z_peselem(pesel)
-        konto.imie = dane['imie'] or konto.imie
-        konto.nazwisko = dane['nazwisko'] or konto.nazwisko
-        konto.pesel = dane['pesel'] or konto.pesel
+
+        if konto != None:
+            for key in dane:
+                if key == "imie":
+                    konto.imie = dane["imie"]
+                elif key == "nazwisko":
+                    konto.nazwisko = dane["nazwisko"]
+                elif key == "pesel":
+                    konto.pesel = dane["pesel"]
+
 
     @classmethod
     def usun_konto(cls, pesel):
