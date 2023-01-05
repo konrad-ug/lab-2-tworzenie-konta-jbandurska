@@ -32,3 +32,8 @@ class RejestrKont:
     def usun_konto(cls, pesel):
         konto = cls.wyszukaj_konto_z_peselem(pesel)
         cls.lista.remove(konto)
+
+    @classmethod
+    def wyczysc_rejestr(cls):
+        cls.lista = []
+        return cls.lista
