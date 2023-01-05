@@ -50,5 +50,8 @@ class TestObslugaKont(unittest.TestCase):
         # Sprawdzenie czy delete zadziałał poprawnie
         get_resp = requests.get(self.url + f"/konta/konto/{self.body['pesel']}")
         self.assertEqual(get_resp.status_code, 200) 
-        self.assertEqual(get_resp.json()[0], "Nie ma takiego konta")
+        self.assertEqual(get_resp.json()["msg"], "Nie ma takiego konta")
 
+    def test_6_wyczysc_rejestr(self):
+        delete_resp = requests.delete(self.url + "/konta/wyczysc_rejestr")
+        self.assertEqual(delete_resp.status_code, 202)
